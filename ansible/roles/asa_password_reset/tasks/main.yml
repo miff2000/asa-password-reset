@@ -1,0 +1,28 @@
+---
+
+- name: Get the running version
+  block:
+  - name: Run show version
+    asa_command:
+      commands:
+        - show version
+    register: asa_version
+  - name: Display version on-screen
+    debug:
+      var: asa_version.stdout_lines
+  when: asa_password_reset_show_version
+
+- name: Generate commands to file
+  template:
+    src: commands.j2
+    dest: "{{ asa_password_reset_output_file }}"
+  delegate_to: localhost
+
+- name: "Read {{ asa_password_reset_output_file }} into a list"
+  set_fact:
+    commands: "{{ lookup('file', asa_password_reset_output_file ).split('\n') }}"
+
+- name: Reset user account passwords
+  asa_command:
+    commands: "{{ commands }}"
+

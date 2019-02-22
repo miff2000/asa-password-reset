@@ -1,0 +1,1 @@
+asafirewall ansible_connection=network_cli 

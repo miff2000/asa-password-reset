@@ -1,0 +1,5 @@
+configure terminal
+{% for user in asa_password_reset_user_accounts %}
+username {{ user }} password {{ lookup('password', '/dev/null length=12 chars=ascii_letters,digits') }}
+{% endfor %}
+write memory

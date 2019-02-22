@@ -1,0 +1,5 @@
+---
+
+asa_password_reset_show_version: false
+asa_password_reset_output_file: /output/commands.txt
+asa_password_reset_user_accounts: []
